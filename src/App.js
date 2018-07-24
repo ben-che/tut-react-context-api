@@ -15,7 +15,7 @@ class ContextWrapper extends Component {
   // updateCounter will take in an action in the form of a boolean - 
   //  true will add one to the counter and false will subtract one
   updateCounter = (action) => {
-    if (action) {
+    if (action === "add") {
       this.setState({
         counter: this.state.counter + 1
       })
@@ -30,7 +30,7 @@ class ContextWrapper extends Component {
   render() {
     return (
       // Provider will pass this component's state as props onto anything we wrap it around
-      <CounterContext.Provider value={this.state}>
+      <CounterContext.Provider value={{ state:this.state, updateCounter: (action) => this.updateCounter(action)}}>
         {this.props.children}
       </CounterContext.Provider>
     )
@@ -62,8 +62,8 @@ class ButtonContainer extends Component {
     return (
       <div>
           {/* Incrementers to add/subtract from the running total */}
-          <Incrementer />
-          <Incrementer />
+          <Incrementer action={"add"}/>
+          <Incrementer action={"subtract"}/>
 
           {/* Display to show the running total */}
           <Display />
@@ -78,6 +78,11 @@ class Incrementer extends Component {
       console.log(this.props)
     return (
       <div>
+        <CounterContext.Consumer>
+          {context => 
+            <p onClick={ () => context.updateCounter(this.props.action)}>Add one! </p>
+          }
+        </CounterContext.Consumer>
         
       </div>
     );
@@ -98,7 +103,7 @@ class Display extends Component {
               access it directly now! */}
             {context => 
               <React.Fragment>
-                <p>Running Total: {context.counter}</p>
+                <p>Running Total: {context.state.counter}</p>
               </React.Fragment>}
 
           </CounterContext.Consumer>

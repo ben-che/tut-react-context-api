@@ -12,6 +12,7 @@ class ContextWrapper extends Component {
   }
   render() {
     return (
+      // Provider will pass this component's state as props onto anything we wrap it around
       <CounterContext.Provider value={this.state}>
         {this.props.children}
       </CounterContext.Provider>
@@ -41,9 +42,14 @@ class ButtonContainer extends Component {
       console.log(this.props)
     return (
       <div>
-        <CounterContext.Consumer>
-          {context => <p>{context.counter}</p>}
-        </CounterContext.Consumer>
+
+
+          {/* Incrementers to add/subtract from the running total */}
+          <Incrementer />
+          <Incrementer />
+
+          {/* Display to show the running total */}
+          <Display />
       </div>
     );
   }
@@ -66,9 +72,13 @@ class Display extends Component {
   render() {
       console.log(this.props)
     return (
-      <div>
-        
-      </div>
+      // Wrapping the component with a CounterContext.Consumer gives it access to the state in Context Wrapper,
+      //  where the running total is stored
+      <CounterContext.Consumer>
+        <div>
+          
+        </div>
+      </CounterContext.Consumer>
     );
   }
 }

@@ -4,21 +4,32 @@ import './App.css';
 // Create the context inside App, our top level component
 const CounterContext = React.createContext();
 
-// Top level Component
-class App extends Component {
-  // Add state to App - this will eventually be the context we want to pass around
+// Anything we wrap the ContextWrapper around will gain access to the state
+class ContextWrapper extends Component {
+  // Declaring state
   state = { 
     counter : 0
   }
   render() {
     return (
+      <CounterContext.Provider value={this.state}>
+        {this.props.children}
+      </CounterContext.Provider>
+    )
+  }
+}
+
+// Top level Component
+class App extends Component {
+  render() {
+    return (
       <div>
         <h1>Increment me!</h1>
-        {/* Adding a Provider wrapper gives the entire ButtonContainer tree access
-          to the counter's state */}
-        <CounterContext.Provider value={this.state.counter}>
+        {/* Wrap the components we want to give state access to here: */}
+        <ContextWrapper>
+          {/* Render the Button Container component that contains the rest of our components */}
           <ButtonContainer />
-        </CounterContext.Provider>
+        </ContextWrapper>
       </div>
     );
   }
@@ -30,7 +41,9 @@ class ButtonContainer extends Component {
       console.log(this.props)
     return (
       <div>
-        
+        <CounterContext.Consumer>
+          {context => <p>{context.counter}</p>}
+        </CounterContext.Consumer>
       </div>
     );
   }

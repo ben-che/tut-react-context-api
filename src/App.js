@@ -10,6 +10,23 @@ class ContextWrapper extends Component {
   state = { 
     counter : 0
   }
+
+  // The methods that update state also need to be defined:
+  // updateCounter will take in an action in the form of a boolean - 
+  //  true will add one to the counter and false will subtract one
+  updateCounter = (action) => {
+    if (action) {
+      this.setState({
+        counter: this.state.counter + 1
+      })
+    }
+    else {
+      this.setState({
+        counter:this.state.counter - 1
+      })
+    }
+  } 
+
   render() {
     return (
       // Provider will pass this component's state as props onto anything we wrap it around
@@ -37,13 +54,13 @@ class App extends Component {
 }
 
 // ButtonContainer will hold 2 Incrementer components and a Display component, mid-level component
+//  Originally, without the Context API, we would have to pass props through ButtonContainer so that
+//  its children components will have access to it
+//  However, with Context, we don't have to anymore - we can just render the components we need:
 class ButtonContainer extends Component {
   render() {
-      console.log(this.props)
     return (
       <div>
-
-
           {/* Incrementers to add/subtract from the running total */}
           <Incrementer />
           <Incrementer />
@@ -76,7 +93,7 @@ class Display extends Component {
       //  where the running total is stored
       <div>
           <CounterContext.Consumer>
-            
+
             {/* We have access to the state within CounterContext - we can
               access it directly now! */}
             {context => 

@@ -74,11 +74,19 @@ class Display extends Component {
     return (
       // Wrapping the component with a CounterContext.Consumer gives it access to the state in Context Wrapper,
       //  where the running total is stored
-      <CounterContext.Consumer>
-        <div>
-          
-        </div>
-      </CounterContext.Consumer>
+      <div>
+          <CounterContext.Consumer>
+            
+            {/* We have access to the state within CounterContext - we can
+              access it directly now! */}
+            {context => 
+              <React.Fragment>
+                <p>Running Total: {context.counter}</p>
+              </React.Fragment>}
+
+          </CounterContext.Consumer>
+      </div>
+
     );
   }
 }

@@ -62,8 +62,8 @@ class ButtonContainer extends Component {
     return (
       <div>
           {/* Incrementers to add/subtract from the running total */}
-          <Incrementer action={"add"}/>
-          <Incrementer action={"subtract"}/>
+          <Incrementer action={"add"} />
+          <Incrementer action={"subtract"} />
 
           {/* Display to show the running total */}
           <Display />
@@ -75,12 +75,11 @@ class ButtonContainer extends Component {
 // Incrementer is lowest level component and will increment the Display component
 class Incrementer extends Component {
   render() {
-      console.log(this.props)
     return (
       <div>
         <CounterContext.Consumer>
           {context => 
-            <p onClick={ () => context.updateCounter(this.props.action)}>Add one! </p>
+            <p onClick={ () => context.updateCounter(this.props.action)}>{this.props.action} one! </p>
           }
         </CounterContext.Consumer>
         
@@ -92,7 +91,6 @@ class Incrementer extends Component {
 // Display is lowest level component and will show the counter
 class Display extends Component {
   render() {
-      console.log(this.props)
     return (
       // Wrapping the component with a CounterContext.Consumer gives it access to the state in Context Wrapper,
       //  where the running total is stored
@@ -103,7 +101,7 @@ class Display extends Component {
               access it directly now! */}
             {context => 
               <React.Fragment>
-                <p>Running Total: {context.state.counter}</p>
+                <p>running Total: {context.state.counter}</p>
               </React.Fragment>}
 
           </CounterContext.Consumer>

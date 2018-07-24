@@ -61,7 +61,8 @@ class ButtonContainer extends Component {
   render() {
     return (
       <div>
-          {/* Incrementers to add/subtract from the running total */}
+          {/* Incrementers to add/subtract from the running total - we'll pass it different actions
+          so we're able to modify the state accordingly */}
           <Incrementer action={"add"} />
           <Incrementer action={"subtract"} />
 
@@ -77,6 +78,7 @@ class Incrementer extends Component {
   render() {
     return (
       <div>
+        {/* Wrapping the Incrementer with a Consumer so that they have access to the updateCounter method */}
         <CounterContext.Consumer>
           {context => 
             <p onClick={ () => context.updateCounter(this.props.action)}>{this.props.action} one! </p>

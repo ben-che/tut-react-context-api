@@ -78,6 +78,7 @@ class Incrementer extends Component {
   render() {
     return (
       <div>
+        
         {/* Wrapping the Incrementer with a Consumer so that they have access to the updateCounter method */}
         <CounterContext.Consumer>
           {context => 

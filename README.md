@@ -10,7 +10,7 @@ Now, React has a new Context API (that functions quite similar to Redux) that al
 [Here's a good link](https://stackoverflow.com/questions/49568073/react-context-vs-react-redux-when-should-i-use-each-one) on whether or not you should use Redux or just the React Context API.
 
 ## Basics
-`React.createContext` is used to create the context that changes - a common example of this could be state.
+`React.createContext()` is used to create the context that changes - a common example of this could be state.
 
 Example:
 ``` 
@@ -20,4 +20,7 @@ const myContext = React.createContext(this.state.counter)
 
 ```
 
+`Context.Provider` is used to wrap a component that the context state lives in
+- in my example, I created a component that becomes the provider
 
+`Context.Consumer` is used to wrap a component that needs access to context
